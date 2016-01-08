@@ -28,18 +28,18 @@ import java.util.List;
 
 public class TimeseriesParquetReader {
 
-    public List<Timeseries> readTimeseriesList(Path path) throws IOException {
-        ParquetReader<Timeseries> parquetReader = ParquetReader.builder(new TimeseriesReadSupport(), path).build();
-        List<Timeseries> ret = new ArrayList<Timeseries>();
+  public List<Timeseries> readTimeseriesList(Path path) throws IOException {
+    ParquetReader<Timeseries> parquetReader = ParquetReader.builder(new TimeseriesReadSupport(), path).build();
+    List<Timeseries> ret = new ArrayList<Timeseries>();
 
-        Timeseries timeseries = parquetReader.read();
+    Timeseries timeseries = parquetReader.read();
 
-        while (timeseries != null) {
-            ret.add(timeseries);
-            timeseries = parquetReader.read();
-        }
-
-        parquetReader.close();
-        return ret;
+    while (timeseries != null) {
+      ret.add(timeseries);
+      timeseries = parquetReader.read();
     }
+
+    parquetReader.close();
+    return ret;
+  }
 }

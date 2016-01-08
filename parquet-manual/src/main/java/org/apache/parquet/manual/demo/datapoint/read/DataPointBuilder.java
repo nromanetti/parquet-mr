@@ -21,10 +21,10 @@ package org.apache.parquet.manual.demo.datapoint.read;
 import org.apache.parquet.manual.demo.DataPoint;
 
 public class DataPointBuilder {
-    int date;
-    double value;
+  int date;
+  double value;
 
-    public DataPoint build() {
-        return new DataPoint(date, value);
-    }
+  public DataPoint build() {
+    return new DataPoint(date, value);
+  }
 }

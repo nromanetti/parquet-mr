@@ -33,35 +33,35 @@ import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT32;
 import static org.apache.parquet.schema.Type.Repetition.REQUIRED;
 
 public class DataPointWriteSupport extends WriteSupport<DataPoint> {
-    public final static MessageType rootSchema = new MessageType("dataPoint",
-            new PrimitiveType(REQUIRED, INT32, "date"),
-            new PrimitiveType(REQUIRED, DOUBLE, "value"));
+  public final static MessageType rootSchema = new MessageType("dataPoint",
+      new PrimitiveType(REQUIRED, INT32, "date"),
+      new PrimitiveType(REQUIRED, DOUBLE, "value"));
 
-    private RecordConsumer recordConsumer;
+  private RecordConsumer recordConsumer;
 
-    @Override
-    public WriteContext init(Configuration configuration) {
-        Map<String, String> extraMetaData = new HashMap<String, String>();
-        return new WriteContext(rootSchema, extraMetaData);
-    }
+  @Override
+  public WriteContext init(Configuration configuration) {
+    Map<String, String> extraMetaData = new HashMap<String, String>();
+    return new WriteContext(rootSchema, extraMetaData);
+  }
 
-    @Override
-    public void prepareForWrite(RecordConsumer recordConsumer) {
-        this.recordConsumer = recordConsumer;
-    }
+  @Override
+  public void prepareForWrite(RecordConsumer recordConsumer) {
+    this.recordConsumer = recordConsumer;
+  }
 
-    @Override
-    public void write(DataPoint record) {
-        recordConsumer.startMessage();
+  @Override
+  public void write(DataPoint record) {
+    recordConsumer.startMessage();
 
-        recordConsumer.startField("date", 0);
-        recordConsumer.addInteger(record.date);
-        recordConsumer.endField("date", 0);
+    recordConsumer.startField("date", 0);
+    recordConsumer.addInteger(record.date);
+    recordConsumer.endField("date", 0);
 
-        recordConsumer.startField("value", 1);
-        recordConsumer.addDouble(record.value);
-        recordConsumer.endField("value", 1);
+    recordConsumer.startField("value", 1);
+    recordConsumer.addDouble(record.value);
+    recordConsumer.endField("value", 1);
 
-        recordConsumer.endMessage();
-    }
+    recordConsumer.endMessage();
+  }
 }

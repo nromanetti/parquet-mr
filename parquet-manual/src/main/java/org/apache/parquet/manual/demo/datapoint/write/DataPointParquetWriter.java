@@ -29,29 +29,29 @@ import java.util.List;
 
 public class DataPointParquetWriter {
 
-    public void writeDataPointList(Path path, List<DataPoint> dataPoints) throws IOException {
-        ParquetWriter<DataPoint> writer = new Builder(path).build();
+  public void writeDataPointList(Path path, List<DataPoint> dataPoints) throws IOException {
+    ParquetWriter<DataPoint> writer = new Builder(path).build();
 
-        for (DataPoint dataPoint : dataPoints) {
-            writer.write(dataPoint);
-        }
-
-        writer.close();
+    for (DataPoint dataPoint : dataPoints) {
+      writer.write(dataPoint);
     }
 
-    private static class Builder extends ParquetWriter.Builder<DataPoint, Builder> {
-        private Builder(Path file) {
-            super(file);
-        }
+    writer.close();
+  }
 
-        @Override
-        protected Builder self() {
-            return this;
-        }
-
-        @Override
-        protected WriteSupport<DataPoint> getWriteSupport(Configuration conf) {
-            return new DataPointWriteSupport();
-        }
+  private static class Builder extends ParquetWriter.Builder<DataPoint, Builder> {
+    private Builder(Path file) {
+      super(file);
     }
+
+    @Override
+    protected Builder self() {
+      return this;
+    }
+
+    @Override
+    protected WriteSupport<DataPoint> getWriteSupport(Configuration conf) {
+      return new DataPointWriteSupport();
+    }
+  }
 }

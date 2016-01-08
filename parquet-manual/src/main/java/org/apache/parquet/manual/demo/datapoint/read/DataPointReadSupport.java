@@ -29,14 +29,14 @@ import java.util.Map;
 
 public class DataPointReadSupport extends ReadSupport<DataPoint> {
 
-    @Override
-    public ReadContext init(InitContext context) {
-        MessageType fileSchema = context.getFileSchema();
-        return new ReadContext(fileSchema);
-    }
+  @Override
+  public ReadContext init(InitContext context) {
+    MessageType fileSchema = context.getFileSchema();
+    return new ReadContext(fileSchema);
+  }
 
-    @Override
-    public RecordMaterializer<DataPoint> prepareForRead(Configuration configuration, Map<String, String> keyValueMetaData, MessageType fileSchema, ReadContext readContext) {
-        return new DataPointMaterializer();
-    }
+  @Override
+  public RecordMaterializer<DataPoint> prepareForRead(Configuration configuration, Map<String, String> keyValueMetaData, MessageType fileSchema, ReadContext readContext) {
+    return new DataPointMaterializer();
+  }
 }

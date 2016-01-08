@@ -22,14 +22,14 @@ import org.apache.parquet.io.api.PrimitiveConverter;
 
 public class FieldValueConverter extends PrimitiveConverter {
 
-    private DataPointBuilder dataPointBuilder;
+  private DataPointBuilder dataPointBuilder;
 
-    public FieldValueConverter(DataPointBuilder dataPointBuilder) {
-        this.dataPointBuilder = dataPointBuilder;
-    }
+  public FieldValueConverter(DataPointBuilder dataPointBuilder) {
+    this.dataPointBuilder = dataPointBuilder;
+  }
 
-    @Override
-    public void addDouble(double value) {
-        dataPointBuilder.value = value;
-    }
+  @Override
+  public void addDouble(double value) {
+    dataPointBuilder.value = value;
+  }
 }

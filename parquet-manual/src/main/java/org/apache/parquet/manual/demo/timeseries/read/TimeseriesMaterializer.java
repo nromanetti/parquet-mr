@@ -24,16 +24,16 @@ import org.apache.parquet.manual.demo.Timeseries;
 
 public class TimeseriesMaterializer extends RecordMaterializer<Timeseries> {
 
-    private TimeseriesBuilder timeseriesBuilder = new TimeseriesBuilder();
-    private TimeseriesConverter timeseriesConverter = new TimeseriesConverter(timeseriesBuilder);
+  private TimeseriesBuilder timeseriesBuilder = new TimeseriesBuilder();
+  private TimeseriesConverter timeseriesConverter = new TimeseriesConverter(timeseriesBuilder);
 
-    @Override
-    public Timeseries getCurrentRecord() {
-        return timeseriesBuilder.build();
-    }
+  @Override
+  public Timeseries getCurrentRecord() {
+    return timeseriesBuilder.build();
+  }
 
-    @Override
-    public GroupConverter getRootConverter() {
-        return timeseriesConverter;
-    }
+  @Override
+  public GroupConverter getRootConverter() {
+    return timeseriesConverter;
+  }
 }

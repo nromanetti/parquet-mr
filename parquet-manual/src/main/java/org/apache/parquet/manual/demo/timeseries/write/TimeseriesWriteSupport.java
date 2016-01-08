@@ -18,12 +18,12 @@
  */
 package org.apache.parquet.manual.demo.timeseries.write;
 
-import org.apache.parquet.manual.demo.DataPoint;
-import org.apache.parquet.manual.demo.Timeseries;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.hadoop.api.WriteSupport;
 import org.apache.parquet.io.api.Binary;
 import org.apache.parquet.io.api.RecordConsumer;
+import org.apache.parquet.manual.demo.DataPoint;
+import org.apache.parquet.manual.demo.Timeseries;
 import org.apache.parquet.schema.GroupType;
 import org.apache.parquet.schema.MessageType;
 import org.apache.parquet.schema.PrimitiveType;
@@ -37,56 +37,56 @@ import static org.apache.parquet.schema.Type.Repetition.REQUIRED;
 
 public class TimeseriesWriteSupport extends WriteSupport<Timeseries> {
 
-    private RecordConsumer recordConsumer;
+  private RecordConsumer recordConsumer;
 
-    @Override
-    public WriteContext init(Configuration configuration) {
-        MessageType rootSchema =
-                new MessageType("timeseries",
-                        new GroupType(REPEATED, "map",
-                                new PrimitiveType(REQUIRED, BINARY, "name"),
-                                new GroupType(REPEATED, "dataPoint",
-                                        new PrimitiveType(REQUIRED, INT32, "date"),
-                                        new PrimitiveType(REQUIRED, DOUBLE, "value"))));
+  @Override
+  public WriteContext init(Configuration configuration) {
+    MessageType rootSchema =
+        new MessageType("timeseries",
+            new GroupType(REPEATED, "map",
+                new PrimitiveType(REQUIRED, BINARY, "name"),
+                new GroupType(REPEATED, "dataPoint",
+                    new PrimitiveType(REQUIRED, INT32, "date"),
+                    new PrimitiveType(REQUIRED, DOUBLE, "value"))));
 
 
-        Map<String, String> extraMetaData = new HashMap<String, String>();
-        return new WriteContext(rootSchema, extraMetaData);
+    Map<String, String> extraMetaData = new HashMap<String, String>();
+    return new WriteContext(rootSchema, extraMetaData);
+  }
+
+  @Override
+  public void prepareForWrite(RecordConsumer recordConsumer) {
+    this.recordConsumer = recordConsumer;
+  }
+
+  @Override
+  public void write(Timeseries timeseries) {
+    recordConsumer.startMessage();
+    recordConsumer.startField("map", 0);
+
+    for (String name : timeseries.names()) {
+      recordConsumer.startGroup();
+      recordConsumer.startField("name", 0);
+      recordConsumer.addBinary(Binary.fromString(name));
+      recordConsumer.endField("name", 0);
+
+      recordConsumer.startField("dataPoint", 1);
+      for (DataPoint r : timeseries.byName(name)) {
+        recordConsumer.startGroup();
+        recordConsumer.startField("date", 0);
+        recordConsumer.addInteger(r.date);
+        recordConsumer.endField("date", 0);
+
+        recordConsumer.startField("value", 1);
+        recordConsumer.addDouble(r.value);
+        recordConsumer.endField("value", 1);
+        recordConsumer.endGroup();
+      }
+      recordConsumer.endField("dataPoint", 1);
+      recordConsumer.endGroup();
     }
 
-    @Override
-    public void prepareForWrite(RecordConsumer recordConsumer) {
-        this.recordConsumer = recordConsumer;
-    }
-
-    @Override
-    public void write(Timeseries timeseries) {
-        recordConsumer.startMessage();
-        recordConsumer.startField("map", 0);
-
-        for (String name : timeseries.names()) {
-            recordConsumer.startGroup();
-            recordConsumer.startField("name", 0);
-            recordConsumer.addBinary(Binary.fromString(name));
-            recordConsumer.endField("name", 0);
-
-            recordConsumer.startField("dataPoint", 1);
-            for (DataPoint r : timeseries.byName(name)) {
-                recordConsumer.startGroup();
-                recordConsumer.startField("date", 0);
-                recordConsumer.addInteger(r.date);
-                recordConsumer.endField("date", 0);
-
-                recordConsumer.startField("value", 1);
-                recordConsumer.addDouble(r.value);
-                recordConsumer.endField("value", 1);
-                recordConsumer.endGroup();
-            }
-            recordConsumer.endField("dataPoint", 1);
-            recordConsumer.endGroup();
-        }
-
-        recordConsumer.endField("map", 0);
-        recordConsumer.endMessage();
-    }
+    recordConsumer.endField("map", 0);
+    recordConsumer.endMessage();
+  }
 }

@@ -21,16 +21,16 @@ package org.apache.parquet.manual.demo.timeseries.read;
 import org.apache.parquet.manual.demo.datapoint.read.DataPointConverter;
 
 public class DataPointConverterForTimeseries extends DataPointConverter {
-    private final TimeseriesBuilder timeseriesBuilder;
+  private final TimeseriesBuilder timeseriesBuilder;
 
-    public DataPointConverterForTimeseries(TimeseriesBuilder timeseriesBuilder) {
-        super(timeseriesBuilder.dataPointBuilder);
-        this.timeseriesBuilder = timeseriesBuilder;
-    }
+  public DataPointConverterForTimeseries(TimeseriesBuilder timeseriesBuilder) {
+    super(timeseriesBuilder.dataPointBuilder);
+    this.timeseriesBuilder = timeseriesBuilder;
+  }
 
-    @Override
-    public void end() {
-        System.out.println(getClass().getSimpleName() + ".end");
-        timeseriesBuilder.addCurrentDataPoint();
-    }
+  @Override
+  public void end() {
+    System.out.println(getClass().getSimpleName() + ".end");
+    timeseriesBuilder.addCurrentDataPoint();
+  }
 }

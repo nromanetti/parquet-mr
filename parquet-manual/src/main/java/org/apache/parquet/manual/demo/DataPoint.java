@@ -23,16 +23,16 @@ package org.apache.parquet.manual.demo;
  * into a parquet file and how to read it back from it.
  */
 public class DataPoint {
-    public final int date;
-    public final double value;
+  public final int date;
+  public final double value;
 
-    public DataPoint(int date, double value) {
-        this.date = date;
-        this.value = value;
-    }
+  public DataPoint(int date, double value) {
+    this.date = date;
+    this.value = value;
+  }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " => date: " + date + " value: " + value;
-    }
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + " => date: " + date + " value: " + value;
+  }
 }

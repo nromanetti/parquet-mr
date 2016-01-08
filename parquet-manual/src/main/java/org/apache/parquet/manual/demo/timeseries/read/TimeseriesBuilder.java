@@ -18,9 +18,9 @@
  */
 package org.apache.parquet.manual.demo.timeseries.read;
 
-import org.apache.parquet.manual.demo.datapoint.read.DataPointBuilder;
 import org.apache.parquet.manual.demo.DataPoint;
 import org.apache.parquet.manual.demo.Timeseries;
+import org.apache.parquet.manual.demo.datapoint.read.DataPointBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,30 +28,30 @@ import java.util.List;
 import java.util.Map;
 
 public class TimeseriesBuilder {
-    public final DataPointBuilder dataPointBuilder = new DataPointBuilder();
+  public final DataPointBuilder dataPointBuilder = new DataPointBuilder();
 
-    private Map<String, DataPoint[]> map = new HashMap();
+  private Map<String, DataPoint[]> map = new HashMap();
 
-    String name;
-    List<DataPoint> dataPoints = new ArrayList<DataPoint>();
+  String name;
+  List<DataPoint> dataPoints = new ArrayList<DataPoint>();
 
-    public void addCurrentDataPoint() {
-        dataPoints.add(dataPointBuilder.build());
+  public void addCurrentDataPoint() {
+    dataPoints.add(dataPointBuilder.build());
+  }
+
+  public void putCurrentMapEntry() {
+    map.put(name, dataPoints.toArray(new DataPoint[dataPoints.size()]));
+    dataPoints.clear();
+    name = null;
+  }
+
+  public Timeseries build() {
+    try {
+      return new Timeseries(map);
+    } finally {
+      map = new HashMap<String, DataPoint[]>();
+      dataPoints.clear();
+      name = null;
     }
-
-    public void putCurrentMapEntry() {
-        map.put(name, dataPoints.toArray(new DataPoint[dataPoints.size()]));
-        dataPoints.clear();
-        name = null;
-    }
-
-    public Timeseries build() {
-        try {
-            return new Timeseries(map);
-        } finally {
-            map = new HashMap<String, DataPoint[]>();
-            dataPoints.clear();
-            name = null;
-        }
-    }
+  }
 }

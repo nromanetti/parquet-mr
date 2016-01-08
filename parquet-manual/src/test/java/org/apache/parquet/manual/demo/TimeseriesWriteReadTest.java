@@ -34,43 +34,43 @@ import static org.junit.Assert.assertThat;
 
 public class TimeseriesWriteReadTest {
 
-    @Test
-    public void test() throws IOException {
-        Path path = new Path("target/timeseries-list-" + System.nanoTime() + ".parquet");
+  @Test
+  public void test() throws IOException {
+    Path path = new Path("target/timeseries-list-" + System.nanoTime() + ".parquet");
 
-        Map<String, DataPoint[]> map1 = new HashMap<String, DataPoint[]>();
-        map1.put("one-ts", new DataPoint[]{new DataPoint(1, 1.1d), new DataPoint(2, 1.2d)});
-        map1.put("another-ts", new DataPoint[]{new DataPoint(1, 2.1d), new DataPoint(2, 2.2d)});
-        map1.put("third-ts", new DataPoint[]{new DataPoint(1, 3.1d), new DataPoint(2, 3.2d)});
+    Map<String, DataPoint[]> map1 = new HashMap<String, DataPoint[]>();
+    map1.put("one-ts", new DataPoint[]{new DataPoint(1, 1.1d), new DataPoint(2, 1.2d)});
+    map1.put("another-ts", new DataPoint[]{new DataPoint(1, 2.1d), new DataPoint(2, 2.2d)});
+    map1.put("third-ts", new DataPoint[]{new DataPoint(1, 3.1d), new DataPoint(2, 3.2d)});
 
-        List<Timeseries> timeseriesList = new ArrayList<Timeseries>();
-        timeseriesList.add(new Timeseries(map1));
+    List<Timeseries> timeseriesList = new ArrayList<Timeseries>();
+    timeseriesList.add(new Timeseries(map1));
 
-        // write the timeseries list to a parquet file
-        new TimeseriesParquetWriter().writeTimeseriesList(path, timeseriesList);
+    // write the timeseries list to a parquet file
+    new TimeseriesParquetWriter().writeTimeseriesList(path, timeseriesList);
 
-        // and now read it back from the same file.
-        List<Timeseries> res = new TimeseriesParquetReader().readTimeseriesList(path);
-        assertThat(res.size(), is(1));
+    // and now read it back from the same file.
+    List<Timeseries> res = new TimeseriesParquetReader().readTimeseriesList(path);
+    assertThat(res.size(), is(1));
 
-        Timeseries timeseries = res.get(0);
+    Timeseries timeseries = res.get(0);
 
-        DataPoint[] array1 = timeseries.byName("one-ts");
-        assertThat(array1[0].date, is(1));
-        assertThat(array1[0].value, is(1.1d));
-        assertThat(array1[1].date, is(2));
-        assertThat(array1[1].value, is(1.2d));
+    DataPoint[] array1 = timeseries.byName("one-ts");
+    assertThat(array1[0].date, is(1));
+    assertThat(array1[0].value, is(1.1d));
+    assertThat(array1[1].date, is(2));
+    assertThat(array1[1].value, is(1.2d));
 
-        DataPoint[] array2 = timeseries.byName("another-ts");
-        assertThat(array2[0].date, is(1));
-        assertThat(array2[0].value, is(2.1d));
-        assertThat(array2[1].date, is(2));
-        assertThat(array2[1].value, is(2.2d));
+    DataPoint[] array2 = timeseries.byName("another-ts");
+    assertThat(array2[0].date, is(1));
+    assertThat(array2[0].value, is(2.1d));
+    assertThat(array2[1].date, is(2));
+    assertThat(array2[1].value, is(2.2d));
 
-        DataPoint[] array3 = timeseries.byName("third-ts");
-        assertThat(array3[0].date, is(1));
-        assertThat(array3[0].value, is(3.1d));
-        assertThat(array3[1].date, is(2));
-        assertThat(array3[1].value, is(3.2d));
-    }
+    DataPoint[] array3 = timeseries.byName("third-ts");
+    assertThat(array3[0].date, is(1));
+    assertThat(array3[0].value, is(3.1d));
+    assertThat(array3[1].date, is(2));
+    assertThat(array3[1].value, is(3.2d));
+  }
 }

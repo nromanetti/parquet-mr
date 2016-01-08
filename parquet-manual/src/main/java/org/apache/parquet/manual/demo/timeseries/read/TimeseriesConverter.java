@@ -23,29 +23,29 @@ import org.apache.parquet.io.api.GroupConverter;
 
 public class TimeseriesConverter extends GroupConverter {
 
-    private final FieldMapConverter fieldMapConverter;
+  private final FieldMapConverter fieldMapConverter;
 
-    public TimeseriesConverter(TimeseriesBuilder timeseriesBuilder) {
-        this.fieldMapConverter = new FieldMapConverter(timeseriesBuilder);
-    }
+  public TimeseriesConverter(TimeseriesBuilder timeseriesBuilder) {
+    this.fieldMapConverter = new FieldMapConverter(timeseriesBuilder);
+  }
 
-    @Override
-    public Converter getConverter(int fieldIndex) {
-        switch (fieldIndex) {
-            case 0:
-                return fieldMapConverter;
-            default:
-                throw new IllegalStateException("got: " + fieldIndex);
-        }
+  @Override
+  public Converter getConverter(int fieldIndex) {
+    switch (fieldIndex) {
+      case 0:
+        return fieldMapConverter;
+      default:
+        throw new IllegalStateException("got: " + fieldIndex);
     }
+  }
 
-    @Override
-    public void start() {
-        System.out.println(getClass().getSimpleName() + ".start");
-    }
+  @Override
+  public void start() {
+    System.out.println(getClass().getSimpleName() + ".start");
+  }
 
-    @Override
-    public void end() {
-        System.out.println(getClass().getSimpleName() + ".end");
-    }
+  @Override
+  public void end() {
+    System.out.println(getClass().getSimpleName() + ".end");
+  }
 }

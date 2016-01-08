@@ -28,17 +28,17 @@ import java.util.List;
 
 public class DataPointParquetReader {
 
-    public List<DataPoint> readDataPointList(Path path) throws IOException {
-        ParquetReader<DataPoint> parquetReader = ParquetReader.builder(new DataPointReadSupport(), path).build();
-        List<DataPoint> ret = new ArrayList<DataPoint>();
-        DataPoint dataPoint = parquetReader.read();
+  public List<DataPoint> readDataPointList(Path path) throws IOException {
+    ParquetReader<DataPoint> parquetReader = ParquetReader.builder(new DataPointReadSupport(), path).build();
+    List<DataPoint> ret = new ArrayList<DataPoint>();
+    DataPoint dataPoint = parquetReader.read();
 
-        while (dataPoint != null) {
-            ret.add(dataPoint);
-            dataPoint = parquetReader.read();
-        }
-
-        parquetReader.close();
-        return ret;
+    while (dataPoint != null) {
+      ret.add(dataPoint);
+      dataPoint = parquetReader.read();
     }
+
+    parquetReader.close();
+    return ret;
+  }
 }

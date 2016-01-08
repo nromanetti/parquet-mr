@@ -29,14 +29,14 @@ import java.util.Map;
 
 public class TimeseriesReadSupport extends ReadSupport<Timeseries> {
 
-    @Override
-    public ReadContext init(InitContext context) {
-        MessageType fileSchema = context.getFileSchema();
-        return new ReadContext(fileSchema);
-    }
+  @Override
+  public ReadContext init(InitContext context) {
+    MessageType fileSchema = context.getFileSchema();
+    return new ReadContext(fileSchema);
+  }
 
-    @Override
-    public RecordMaterializer<Timeseries> prepareForRead(Configuration configuration, Map<String, String> keyValueMetaData, MessageType fileSchema, ReadContext readContext) {
-        return new TimeseriesMaterializer();
-    }
+  @Override
+  public RecordMaterializer<Timeseries> prepareForRead(Configuration configuration, Map<String, String> keyValueMetaData, MessageType fileSchema, ReadContext readContext) {
+    return new TimeseriesMaterializer();
+  }
 }

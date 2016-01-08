@@ -22,33 +22,33 @@ import org.apache.parquet.io.api.Converter;
 import org.apache.parquet.io.api.GroupConverter;
 
 public class DataPointConverter extends GroupConverter {
-    private final FieldDateConverter fieldDateConverter;
-    private final FieldValueConverter fieldValueConverter;
+  private final FieldDateConverter fieldDateConverter;
+  private final FieldValueConverter fieldValueConverter;
 
-    public DataPointConverter(DataPointBuilder dataPointBuilder) {
-        this.fieldDateConverter = new FieldDateConverter(dataPointBuilder);
-        this.fieldValueConverter = new FieldValueConverter(dataPointBuilder);
-    }
+  public DataPointConverter(DataPointBuilder dataPointBuilder) {
+    this.fieldDateConverter = new FieldDateConverter(dataPointBuilder);
+    this.fieldValueConverter = new FieldValueConverter(dataPointBuilder);
+  }
 
-    @Override
-    public Converter getConverter(int fieldIndex) {
-        switch (fieldIndex) {
-            case 0:
-                return fieldDateConverter;
-            case 1:
-                return fieldValueConverter;
-            default:
-                throw new IllegalStateException("got: " + fieldIndex);
-        }
+  @Override
+  public Converter getConverter(int fieldIndex) {
+    switch (fieldIndex) {
+      case 0:
+        return fieldDateConverter;
+      case 1:
+        return fieldValueConverter;
+      default:
+        throw new IllegalStateException("got: " + fieldIndex);
     }
+  }
 
-    @Override
-    public void start() {
-        System.out.println(getClass().getSimpleName() + ".start");
-    }
+  @Override
+  public void start() {
+    System.out.println(getClass().getSimpleName() + ".start");
+  }
 
-    @Override
-    public void end() {
-        System.out.println(getClass().getSimpleName() + ".end");
-    }
+  @Override
+  public void end() {
+    System.out.println(getClass().getSimpleName() + ".end");
+  }
 }

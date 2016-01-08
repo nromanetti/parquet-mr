@@ -27,26 +27,26 @@ import java.util.Set;
  * into a parquet file and how to read it back from it.
  */
 public class Timeseries {
-    private Map<String, DataPoint[]> map;
+  private Map<String, DataPoint[]> map;
 
-    public Timeseries(Map<String, DataPoint[]> map) {
-        this.map = map;
-    }
+  public Timeseries(Map<String, DataPoint[]> map) {
+    this.map = map;
+  }
 
-    public Set<String> names() {
-        return map.keySet();
-    }
+  public Set<String> names() {
+    return map.keySet();
+  }
 
-    public DataPoint[] byName(String name) {
-        return map.get(name);
-    }
+  public DataPoint[] byName(String name) {
+    return map.get(name);
+  }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for(String key : names()) {
-            sb.append("key: " + key + " value: " + Arrays.toString(map.get(key))).append("\n");
-        }
-        return sb.toString();
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (String key : names()) {
+      sb.append("key: " + key + " value: " + Arrays.toString(map.get(key))).append("\n");
     }
+    return sb.toString();
+  }
 }

@@ -23,36 +23,36 @@ import org.apache.parquet.io.api.GroupConverter;
 
 public class FieldMapConverter extends GroupConverter {
 
-    private final TimeseriesBuilder timeseriesBuilder;
-    private final MapKeyConverter mapKeyConverter;
-    private final DataPointConverterForTimeseries dataPointConverterForTimeseries;
+  private final TimeseriesBuilder timeseriesBuilder;
+  private final MapKeyConverter mapKeyConverter;
+  private final DataPointConverterForTimeseries dataPointConverterForTimeseries;
 
-    public FieldMapConverter(TimeseriesBuilder timeseriesBuilder) {
-        this.timeseriesBuilder = timeseriesBuilder;
-        this.mapKeyConverter = new MapKeyConverter(timeseriesBuilder);
-        this.dataPointConverterForTimeseries = new DataPointConverterForTimeseries(timeseriesBuilder);
-    }
+  public FieldMapConverter(TimeseriesBuilder timeseriesBuilder) {
+    this.timeseriesBuilder = timeseriesBuilder;
+    this.mapKeyConverter = new MapKeyConverter(timeseriesBuilder);
+    this.dataPointConverterForTimeseries = new DataPointConverterForTimeseries(timeseriesBuilder);
+  }
 
-    @Override
-    public Converter getConverter(int fieldIndex) {
-        switch (fieldIndex) {
-            case 0:
-                return mapKeyConverter;
-            case 1:
-                return dataPointConverterForTimeseries;
-            default:
-                throw new IllegalStateException("got: " + fieldIndex);
-        }
+  @Override
+  public Converter getConverter(int fieldIndex) {
+    switch (fieldIndex) {
+      case 0:
+        return mapKeyConverter;
+      case 1:
+        return dataPointConverterForTimeseries;
+      default:
+        throw new IllegalStateException("got: " + fieldIndex);
     }
+  }
 
-    @Override
-    public void start() {
-        System.out.println(getClass().getSimpleName() + ".start");
-    }
+  @Override
+  public void start() {
+    System.out.println(getClass().getSimpleName() + ".start");
+  }
 
-    @Override
-    public void end() {
-        System.out.println(getClass().getSimpleName() + ".end");
-        timeseriesBuilder.putCurrentMapEntry();
-    }
+  @Override
+  public void end() {
+    System.out.println(getClass().getSimpleName() + ".end");
+    timeseriesBuilder.putCurrentMapEntry();
+  }
 }

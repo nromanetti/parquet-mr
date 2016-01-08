@@ -23,16 +23,16 @@ import org.apache.parquet.io.api.RecordMaterializer;
 import org.apache.parquet.manual.demo.DataPoint;
 
 public class DataPointMaterializer extends RecordMaterializer<DataPoint> {
-    private DataPointBuilder dataPointBuilder = new DataPointBuilder();
-    private DataPointConverter dataPointConverter = new DataPointConverter(dataPointBuilder);
+  private DataPointBuilder dataPointBuilder = new DataPointBuilder();
+  private DataPointConverter dataPointConverter = new DataPointConverter(dataPointBuilder);
 
-    @Override
-    public DataPoint getCurrentRecord() {
-        return dataPointBuilder.build();
-    }
+  @Override
+  public DataPoint getCurrentRecord() {
+    return dataPointBuilder.build();
+  }
 
-    @Override
-    public GroupConverter getRootConverter() {
-        return dataPointConverter;
-    }
+  @Override
+  public GroupConverter getRootConverter() {
+    return dataPointConverter;
+  }
 }

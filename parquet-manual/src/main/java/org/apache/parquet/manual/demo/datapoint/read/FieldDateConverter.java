@@ -22,14 +22,14 @@ import org.apache.parquet.io.api.PrimitiveConverter;
 
 public class FieldDateConverter extends PrimitiveConverter {
 
-    private DataPointBuilder dataPointBuilder;
+  private DataPointBuilder dataPointBuilder;
 
-    public FieldDateConverter(DataPointBuilder dataPointBuilder) {
-        this.dataPointBuilder = dataPointBuilder;
-    }
+  public FieldDateConverter(DataPointBuilder dataPointBuilder) {
+    this.dataPointBuilder = dataPointBuilder;
+  }
 
-    @Override
-    public void addInt(int value) {
-        dataPointBuilder.date = value;
-    }
+  @Override
+  public void addInt(int value) {
+    dataPointBuilder.date = value;
+  }
 }

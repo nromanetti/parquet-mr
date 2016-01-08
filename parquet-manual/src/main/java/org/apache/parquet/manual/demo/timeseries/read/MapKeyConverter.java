@@ -25,15 +25,15 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Converter for the key of the map present in Timeseries.
  */
 public class MapKeyConverter extends PrimitiveConverter {
-    private TimeseriesBuilder timeseriesBuilder;
+  private TimeseriesBuilder timeseriesBuilder;
 
-    public MapKeyConverter(TimeseriesBuilder timeseriesBuilder) {
-        this.timeseriesBuilder = timeseriesBuilder;
-    }
+  public MapKeyConverter(TimeseriesBuilder timeseriesBuilder) {
+    this.timeseriesBuilder = timeseriesBuilder;
+  }
 
-    @Override
-    public void addBinary(Binary value) {
-        timeseriesBuilder.name = value.toStringUsingUTF8();
-        System.out.println(getClass().getSimpleName() + ".addBinary: " + value + " <=> " + timeseriesBuilder.name);
-    }
+  @Override
+  public void addBinary(Binary value) {
+    timeseriesBuilder.name = value.toStringUsingUTF8();
+    System.out.println(getClass().getSimpleName() + ".addBinary: " + value + " <=> " + timeseriesBuilder.name);
+  }
 }

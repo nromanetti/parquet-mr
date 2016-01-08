@@ -29,29 +29,29 @@ import java.util.List;
 
 public class TimeseriesParquetWriter {
 
-    public void writeTimeseriesList(Path path, List<Timeseries> timeseriesList) throws IOException {
-        ParquetWriter<Timeseries> writer = new Builder(path).build();
+  public void writeTimeseriesList(Path path, List<Timeseries> timeseriesList) throws IOException {
+    ParquetWriter<Timeseries> writer = new Builder(path).build();
 
-        for (Timeseries timeseries : timeseriesList) {
-            writer.write(timeseries);
-        }
-
-        writer.close();
+    for (Timeseries timeseries : timeseriesList) {
+      writer.write(timeseries);
     }
 
-    private static class Builder extends ParquetWriter.Builder<Timeseries, Builder> {
-        private Builder(Path file) {
-            super(file);
-        }
+    writer.close();
+  }
 
-        @Override
-        protected Builder self() {
-            return this;
-        }
-
-        @Override
-        protected WriteSupport<Timeseries> getWriteSupport(Configuration conf) {
-            return new TimeseriesWriteSupport();
-        }
+  private static class Builder extends ParquetWriter.Builder<Timeseries, Builder> {
+    private Builder(Path file) {
+      super(file);
     }
+
+    @Override
+    protected Builder self() {
+      return this;
+    }
+
+    @Override
+    protected WriteSupport<Timeseries> getWriteSupport(Configuration conf) {
+      return new TimeseriesWriteSupport();
+    }
+  }
 }
